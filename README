@@ -1,0 +1,34 @@
+Usage:
+
+def main():
+    # Use CsvParser to parse your cts result csv file.
+    x = CsvParser()
+    x.translate(CSV_FILE,VALID_COLUMN)
+    print x.get_result_name()
+    print len(x.get_data())
+    
+    # Use XmlParser to parse your cts result csv file.
+    x = XmlParser()
+    x.translate(XML_LOOP1)
+    print x.get_result_name()
+    print len(x.get_data())
+    
+    #Use CtsResult to get specific result/log from result.
+    y = CtsResult()
+    y.translate_csvs(CSV_FILE,VALID_COLUMN)
+    y.summary_report()
+    y.failed_cases()
+    y.get_log("android.host.security","android.cts.security.SELinuxNeverallowRulesTest.testNeverallowRules73")
+    
+    #Use CtsCompare to get compare with multiple results.
+    x = XmlParser()
+    x.translate(XML_LOOP1)
+    y = CsvParser()
+    y.translate(CSV_FILE,VALID_COLUMN)
+    z = CtsCompare()
+    z.load(x.get_data(),x.get_result_name())
+    z.load(y.get_data(),y.get_result_name())
+    x.translate(XML_LOOP2)
+    z.load(x.get_data())
+    z.merge()
+    z.get_result_csv()
